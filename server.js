@@ -18,3 +18,26 @@ app.post('/api/world', (req, res) => {
 });
 
 app.listen(port, () => console.log(`Listening on port ${port}`));
+
+
+const net = require('net');
+const tcp_server = net.createServer();
+
+tcp_server.on("connection",function(socket){
+  console.log("CONNECTED: "+ sock.remoteAddress +':'+ sock.remotePort)
+})
+
+tcp_server.on('data', function(data) {
+        
+  console.log('DATA ' + sock.remoteAddress + ': ' + data);
+  // Write the data back to the socket, the client will receive it as data from the server
+  sock.write('You said "' + data + '"');
+  
+});
+
+// Add a 'close' event handler to this instance of socket
+tcp_server.on('close', function(data) {
+  console.log('CLOSED: ' + sock.remoteAddress +' '+ sock.remotePort);
+});
+
+tcp_server.listen(3000,()=>{console.log(`Listening on port 3000: net server`)})
